@@ -79,23 +79,23 @@ export default function ApoyoDonaciones() {
 
   return (
     <div className="min-h-screen bg-background">
-      <section className="bg-primary px-6 py-20 md:px-10 md:py-28">
-        <div className="mx-auto max-w-6xl text-center">
+      <section className="bg-primary px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-5xl text-center">
           <p
-            className="mb-4 text-lg uppercase tracking-[0.35em] text-accent"
+            className="mb-3 text-base uppercase tracking-[0.25em] text-accent"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Iglesia Roca de la Esperanza
           </p>
 
           <h1
-            className="mb-8 text-6xl uppercase leading-none tracking-wide text-accent md:text-8xl"
+            className="mb-5 text-5xl uppercase leading-tight tracking-wide text-accent md:text-7xl"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Apoyo y Donaciones
           </h1>
 
-          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-white/90 md:text-2xl">
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-white/90 md:text-xl">
             Somos una organización non profit sostenida por ofrendas y
             donaciones voluntarias. Cada aportación ayuda a servir mejor a
             nuestra iglesia y comunidad.
@@ -103,58 +103,58 @@ export default function ApoyoDonaciones() {
         </div>
       </section>
 
-      <section className="px-6 py-20 md:px-10 md:py-28">
+      <section className="px-6 py-14 md:px-10 md:py-18">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-14 text-center">
+          <div className="mb-10 text-center">
             <p
-              className="mb-3 text-lg uppercase tracking-[0.25em] text-accent"
+              className="mb-2 text-base uppercase tracking-[0.2em] text-accent"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
               Estamos para servirte
             </p>
 
             <h2
-              className="mb-6 text-5xl uppercase leading-none tracking-wide text-primary md:text-7xl"
+              className="mb-4 text-4xl uppercase leading-tight tracking-wide text-primary md:text-6xl"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
               Cómo Podemos Apoyarte
             </h2>
 
-            <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-700">
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-700">
               “Sobrellevad los unos las cargas de los otros, y cumplid así la
               ley de Cristo.” Gálatas 6:2
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             {supportAreas.map((area) => {
               const Icon = area.icon;
 
               return (
                 <div
                   key={area.title}
-                  className="rounded-2xl bg-white p-8 shadow-lg transition-shadow hover:shadow-xl md:p-10"
+                  className="rounded-xl bg-white p-7 shadow-md transition-shadow hover:shadow-lg md:p-8"
                 >
-                  <div className="mb-8 flex items-center gap-5">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-accent/15">
-                      <Icon className="h-10 w-10 text-accent" />
+                  <div className="mb-5 flex items-center gap-4">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-accent/15">
+                      <Icon className="h-7 w-7 text-accent" />
                     </div>
 
                     <h3
-                      className="text-5xl uppercase tracking-wide text-primary"
+                      className="text-4xl uppercase tracking-wide text-primary"
                       style={{ fontFamily: "'Bebas Neue', sans-serif" }}
                     >
                       {area.title}
                     </h3>
                   </div>
 
-                  <p className="mb-8 text-lg leading-relaxed text-gray-700">
+                  <p className="mb-6 text-base leading-relaxed text-gray-700 md:text-lg">
                     {area.description}
                   </p>
 
                   <a
                     href="/contacto"
-                    className="inline-flex items-center justify-center rounded-lg bg-accent px-8 py-4 text-lg uppercase tracking-wide text-primary transition-colors hover:bg-accent/90"
+                    className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-base uppercase tracking-wide text-primary transition-colors hover:bg-accent/90"
                     style={{ fontFamily: "'Bebas Neue', sans-serif" }}
                   >
                     {area.action}
@@ -166,141 +166,122 @@ export default function ApoyoDonaciones() {
         </div>
       </section>
 
-      <section className="bg-white px-6 py-20 md:px-10 md:py-28">
+      <section className="bg-white px-6 py-14 md:px-10 md:py-18">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-14 text-center">
+          <div className="mb-10 text-center">
             <p
-              className="mb-3 text-lg uppercase tracking-[0.25em] text-accent"
+              className="mb-2 text-base uppercase tracking-[0.2em] text-accent"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
               Ofrendas y donaciones
             </p>
 
             <h2
-              className="mb-6 text-5xl uppercase leading-none tracking-wide text-primary md:text-7xl"
+              className="mb-4 text-4xl uppercase leading-tight tracking-wide text-primary md:text-6xl"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
               Tu Aportación Hace la Diferencia
             </h2>
 
-            <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-700">
+            <p className="mx-auto max-w-3xl text-lg leading-relaxed text-gray-700">
               Cada aportación ayuda a apoyar los ministerios, las instalaciones,
               las familias, las misiones y la predicación del evangelio.
             </p>
           </div>
 
-          <div className="rounded-3xl bg-accent/10 p-8 md:p-12">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {impactAreas.map((area) => {
-                const Icon = area.icon;
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {impactAreas.map((area) => {
+              const Icon = area.icon;
 
-                return (
-                  <div
-                    key={area.title}
-                    className="rounded-2xl bg-white p-7 text-center shadow-md"
-                  >
-                    <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-accent/15">
-                      <Icon className="h-10 w-10 text-accent" />
-                    </div>
-
-                    <h4
-                      className="mb-4 text-3xl uppercase tracking-wide text-primary"
-                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                    >
-                      {area.title}
-                    </h4>
-
-                    <p className="text-base leading-relaxed text-gray-700">
-                      {area.description}
-                    </p>
+              return (
+                <div
+                  key={area.title}
+                  className="rounded-xl bg-accent/10 p-6 text-center"
+                >
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-white shadow-sm">
+                    <Icon className="h-7 w-7 text-accent" />
                   </div>
-                );
-              })}
-            </div>
+
+                  <h4
+                    className="mb-2 text-3xl uppercase tracking-wide text-primary"
+                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                  >
+                    {area.title}
+                  </h4>
+
+                  <p className="text-sm leading-relaxed text-gray-700 md:text-base">
+                    {area.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section className="px-6 py-20 md:px-10 md:py-28">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div className="rounded-3xl bg-primary p-10 text-white shadow-lg md:p-12">
-              <p
-                className="mb-4 text-lg uppercase tracking-[0.25em] text-accent"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-              >
-                Formas de dar
-              </p>
+  <section className="px-6 py-14 md:px-10 md:py-18">
+  <div className="mx-auto max-w-6xl">
+    <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-stretch">
+      <div className="rounded-xl bg-primary p-8 text-white shadow-md md:p-10">
+        <p
+          className="mb-2 text-base uppercase tracking-[0.2em] text-accent"
+          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+        >
+          Formas de dar
+        </p>
 
-              <h2
-                className="mb-6 text-5xl uppercase leading-none tracking-wide text-accent md:text-6xl"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-              >
-                Puedes dar de la manera que sea más fácil para ti
-              </h2>
+        <h2
+          className="mb-5 text-4xl uppercase leading-tight tracking-wide text-accent md:text-6xl"
+          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+        >
+          Opciones de Donación
+        </h2>
 
-              <p className="text-lg leading-relaxed text-white/85">
-                Puedes dar tu ofrenda o donación durante nuestros cultos o por
-                medio de las opciones disponibles. Si necesitas ayuda, puedes
-                contactar a la iglesia.
-              </p>
-            </div>
+        <p className="text-lg leading-relaxed text-white/85">
+          Puedes dar tu ofrenda o donación durante nuestros cultos o por medio
+          de las opciones disponibles. Cada aportación ayuda a sostener la obra,
+          los ministerios y el servicio a nuestra comunidad.
+        </p>
+      </div>
 
-            <div className="space-y-6">
-              {givingOptions.map((option) => {
-                const Icon = option.icon;
+      <div className="grid gap-5">
+        {givingOptions.map((option) => {
+          const Icon = option.icon;
 
-                return (
-                  <div
-                    key={option.title}
-                    className="rounded-2xl bg-white p-8 shadow-lg md:p-10"
+          return (
+            <div
+              key={option.title}
+              className="rounded-xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg md:p-7"
+            >
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-accent/15">
+                  <Icon className="h-8 w-8 text-accent" />
+                </div>
+
+                <div className="flex-1">
+                  <h3
+                    className="mb-2 text-3xl uppercase tracking-wide text-primary md:text-4xl"
+                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
                   >
-                    <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-                      <div className="flex h-18 w-18 shrink-0 items-center justify-center rounded-2xl bg-accent/15 p-5">
-                        <Icon className="h-9 w-9 text-accent" />
-                      </div>
+                    {option.title}
+                  </h3>
 
-                      <div>
-                        <h3
-                          className="mb-3 text-4xl uppercase tracking-wide text-primary"
-                          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                        >
-                          {option.title}
-                        </h3>
+                  <p className="text-base leading-relaxed text-gray-700">
+                    {option.description}
+                  </p>
+                </div>
 
-                        <p className="mb-4 text-lg leading-relaxed text-gray-700">
-                          {option.description}
-                        </p>
-
-                        <p className="inline-block rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
-                          {option.note}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                <p className="w-fit rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary sm:ml-4 sm:shrink-0">
+                  {option.note}
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-accent/10 px-6 py-20 md:px-10 md:py-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2
-            className="mb-6 text-5xl uppercase leading-none tracking-wide text-primary md:text-7xl"
-            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-          >
-            Gracias por Ser Parte de Nuestra Familia
-          </h2>
-
-          <p className="text-xl leading-relaxed text-gray-700">
-            Ya sea que necesites apoyo o quieras dar generosamente, recuerda que
-            somos una familia unida en Cristo. Estamos aquí para servirnos
-            mutuamente con amor.
-          </p>
-        </div>
-      </section>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 }

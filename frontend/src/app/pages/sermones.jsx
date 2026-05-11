@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Calendar, User, Clock, Youtube, PlayCircle } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import { formatTime } from "../../lib/formatTime";
-import { getYoutubeThumbnail } from "../../lib/youtube";
+import { getYoutubeThumbnail, YOUTUBE_CHANNEL_URL } from "../../lib/youtube";
+import { VideoModal } from "../components/VideoModal";
 
 function SermonThumbnail({ videoUrl, title }) {
   const [errored, setErrored] = useState(false);
@@ -28,6 +29,7 @@ function SermonThumbnail({ videoUrl, title }) {
 
 export default function Sermones() {
   const [sermons, setSermons] = useState([]);
+  const [activeSermon, setActiveSermon] = useState(null);
 
   useEffect(() => {
     fetchSermons();
@@ -120,35 +122,46 @@ export default function Sermones() {
 
       <div className="py-20 px-10">
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <a
+              href={YOUTUBE_CHANNEL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-white px-10 py-3 rounded-lg hover:bg-primary/90 transition-colors uppercase tracking-wide"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              <Youtube className="w-5 h-5" />
+              Ver todos los sermones en YouTube
+            </a>
+          </div>
+
           {sermons.length === 0 ? (
             <div className="bg-white p-8 rounded-lg shadow-md text-center text-gray-500">
               No hay sermones publicados todavía.
             </div>
           ) : (
-            <>
-            <div className="text-center mb-10">
-              <a
-                href="https://youtube.com/@iglesiarocadelaesperanza"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block bg-primary text-white px-10 py-3 rounded-lg hover:bg-primary/90 transition-colors uppercase tracking-wide"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-              >
-                Ver Todos los Sermones
-              </a>
-              <p className="text-sm text-gray-500 mt-3 italic">URL de YouTube pendiente</p>
-            </div>
-
             <div className="grid md:grid-cols-2 gap-8">
               {sermons.map((sermon) => (
                 <div
                   key={sermon.id}
                   className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden"
                 >
-                  <SermonThumbnail
-                    videoUrl={sermon.video_url}
-                    title={sermon.title}
-                  />
+                  <button
+                    type="button"
+                    onClick={() => setActiveSermon(sermon)}
+                    className="block w-full text-left group"
+                    aria-label={`Ver ${sermon.title}`}
+                  >
+                    <div className="relative">
+                      <SermonThumbnail
+                        videoUrl={sermon.video_url}
+                        title={sermon.title}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                        <PlayCircle className="w-16 h-16 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                    </div>
+                  </button>
 
                   <div className="p-8">
                     <div className="mb-4">
@@ -189,35 +202,19 @@ export default function Sermones() {
                       )}
                     </div>
 
-                    {sermon.video_url ? (
-                      <button
-                        onClick={() => window.open(sermon.video_url, "_blank")}
-                        className="mt-6 w-full bg-accent text-primary px-6 py-3 uppercase tracking-wide hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                      >
-                        <PlayCircle className="w-5 h-5" />
-                        Ver Video
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() =>
-                          window.open(
-                            "https://youtube.com/@iglesiarocadelaesperanza",
-                            "_blank"
-                          )
-                        }
-                        className="mt-6 w-full bg-accent text-primary px-6 py-3 uppercase tracking-wide hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
-                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                      >
-                        <Youtube className="w-5 h-5" />
-                        Ver en YouTube
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => setActiveSermon(sermon)}
+                      className="mt-6 w-full bg-accent text-primary px-6 py-3 uppercase tracking-wide hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
+                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                    >
+                      <PlayCircle className="w-5 h-5" />
+                      Ver Video
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
-            </>
           )}
         </div>
       </div>
@@ -243,18 +240,23 @@ export default function Sermones() {
             <div className="bg-accent/20 p-6 rounded-lg">
               <p className="text-white font-semibold text-lg">Domingos</p>
               <p className="text-white/80">4:30 PM - 6:00 PM</p>
-              <p className="text-white/60 text-sm mt-1">Servicio Dominical</p>
+              <p className="text-white/60 text-sm mt-1">Culto General</p>
             </div>
             <div className="bg-accent/20 p-6 rounded-lg">
               <p className="text-white font-semibold text-lg">Jueves</p>
               <p className="text-white/80">7:30 PM - 9:00 PM</p>
-              <p className="text-white/60 text-sm mt-1">
-                Servicio de Medio Semana
-              </p>
+              <p className="text-white/60 text-sm mt-1">Servicio de Jueves</p>
             </div>
           </div>
         </div>
       </div>
+
+      <VideoModal
+        open={Boolean(activeSermon)}
+        videoUrl={activeSermon?.video_url}
+        title={activeSermon?.title}
+        onClose={() => setActiveSermon(null)}
+      />
     </div>
   );
 }

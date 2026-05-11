@@ -30,58 +30,76 @@ const services = [
 
 export function CTA() {
   return (
-    <section id="contact" className="py-16 md:py-24 bg-accent">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <div className="text-center">
+    <section
+      id="contact"
+      className="bg-gradient-to-br from-accent/25 via-white to-accent/10 px-4 py-16 md:px-6 md:py-20"
+    >
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-10 text-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.26em] text-accent">
+            Reuniones semanales
+          </p>
+
           <h2
-            className="text-white text-3xl md:text-5xl mb-4 md:mb-6 uppercase tracking-wide"
+            className="mb-4 text-4xl uppercase tracking-wide text-primary md:text-5xl"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Horarios de Cultos
           </h2>
-          <p className="text-white/90 text-base md:text-xl mb-8 md:mb-10 max-w-2xl mx-auto">
+
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-700 md:text-lg">
             Te invitamos a ser parte de nuestra familia. Podemos crecer en fe y
             hacer una diferencia en nuestra comunidad.
           </p>
+
+          <div className="mx-auto mt-5 h-1 w-20 bg-accent" />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-10">
+        <div className="mb-10 grid gap-5 md:grid-cols-2">
           {services.map((service) => (
             <div
               key={service.name}
-              className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20"
+              className="rounded-lg border border-accent/30 bg-white p-6 shadow-xl shadow-primary/10 transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <Calendar className="w-5 h-5 text-white" />
-                <h3
-                  className="text-white text-2xl uppercase tracking-wide"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                >
-                  {service.name}
-                </h3>
+              <div className="mb-3 flex items-start gap-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-primary shadow-md">
+                  <Calendar className="h-5 w-5" />
+                </div>
+
+                <div>
+                  <h3
+                    className="text-2xl uppercase tracking-wide text-primary md:text-3xl"
+                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                  >
+                    {service.name}
+                  </h3>
+
+                  <div className="mt-1 flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <Clock className="h-4 w-4 text-accent" />
+                    <p>{service.when}</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-white/90 mb-3">
-                <Clock className="w-4 h-4" />
-                <p className="text-base md:text-lg">{service.when}</p>
-              </div>
-              <p className="text-white/80 text-sm leading-relaxed">
+
+              <p className="border-l-4 border-accent/70 pl-4 text-sm leading-relaxed text-gray-700">
                 {service.description}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <Link
             to="/contacto"
-            className="bg-white text-accent px-8 md:px-10 py-3 md:py-4 rounded-lg hover:bg-white/90 transition-colors uppercase tracking-wide text-sm md:text-base text-center"
+            className="rounded-lg bg-primary px-8 py-3 text-center text-sm uppercase tracking-wide text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 md:px-10 md:text-base"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Contáctanos
           </Link>
+
           <Link
             to="/eventos"
-            className="bg-primary text-white px-8 md:px-10 py-3 md:py-4 rounded-lg hover:bg-primary/90 transition-colors uppercase tracking-wide text-sm md:text-base text-center"
+            className="rounded-lg bg-accent px-8 py-3 text-center text-sm uppercase tracking-wide text-primary shadow-lg shadow-accent/25 transition-colors hover:bg-accent/90 md:px-10 md:text-base"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Ver Todos los Eventos

@@ -1,9 +1,12 @@
 import { Hero } from "../components/hero";
 import { About } from "../components/about";
 import { Sermons } from "../components/sermons";
+import { VisitMap } from "../components/visit-map";
 import { CTA } from "../components/cta";
+
 export default function Home() {
-    return (<div>
+  return (
+    <div>
       <div id="home">
         <Hero />
       </div>
@@ -13,6 +16,8 @@ export default function Home() {
       <div id="sermons">
         <Sermons />
       </div>
+      <VisitMap />
       <CTA />
-    </div>);
+    </div>
+  );
 }

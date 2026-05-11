@@ -1,9 +1,12 @@
 import { Calendar, Clock, MapPin, Users, X } from "lucide-react";
 import { ContactModal } from "../components/contact-modal";
+import { Toast } from "../components/Toast";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { supabase } from "../../lib/supabase";
 import { formatTime } from "../../lib/formatTime";
+
+const initialToast = { open: false, type: "success", title: "", message: "" };
 
 function EventCardImage({ imageUrl, externalUrl, alt }) {
   const [errored, setErrored] = useState(false);
@@ -11,14 +14,14 @@ function EventCardImage({ imageUrl, externalUrl, alt }) {
 
   if (!src || errored) {
     return (
-      <div className="md:w-2/5 bg-primary/10 flex items-center justify-center min-h-[260px]">
+      <div className="md:w-2/5 h-72 md:h-auto md:min-h-[260px] bg-primary/10 flex items-center justify-center overflow-hidden">
         <Calendar className="w-24 h-24 text-accent" />
       </div>
     );
   }
 
   return (
-    <div className="md:w-2/5 bg-primary/10 flex items-center justify-center min-h-[260px] overflow-hidden">
+    <div className="md:w-2/5 h-72 md:h-auto md:min-h-[260px] bg-primary/10 flex items-center justify-center overflow-hidden">
       <img
         src={src}
         alt={alt}
@@ -35,6 +38,9 @@ export default function Eventos() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [registering, setRegistering] = useState(false);
+
+  const [toast, setToast] = useState(initialToast);
+  const closeToast = () => setToast((prev) => ({ ...prev, open: false }));
 
   const [registrationForm, setRegistrationForm] = useState({
     nombre: "",
@@ -189,9 +195,21 @@ export default function Eventos() {
 
     if (error) {
       console.error(error);
-      alert("Hubo un error al enviar tu registro.");
+      setToast({
+        open: true,
+        type: "error",
+        title: "Hubo un problema",
+        message:
+          "No se pudo enviar tu información. Por favor intenta de nuevo.",
+      });
     } else {
-      alert("Tu registro fue enviado correctamente.");
+      setToast({
+        open: true,
+        type: "success",
+        title: "¡Registro recibido!",
+        message:
+          "Gracias por registrarte. Hemos recibido tu información y te contactaremos si es necesario.",
+      });
       closeRegistration();
     }
 
@@ -398,30 +416,42 @@ export default function Eventos() {
       {showRegisterModal && selectedEvent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/50"
+            className="absolute inset-0 bg-primary/60 backdrop-blur-sm"
             onClick={closeRegistration}
           />
 
-          <div className="relative bg-white rounded-lg shadow-2xl max-w-2xl w-full overflow-hidden">
-            <div className="bg-primary text-white px-8 py-6 relative">
+          <div className="relative bg-white rounded-xl shadow-2xl shadow-primary/30 max-w-2xl w-full overflow-hidden border border-accent/25 max-h-[90vh] flex flex-col">
+            <div className="h-1.5 w-full bg-accent shrink-0" />
+
+            <div className="relative bg-primary text-white px-8 py-6 overflow-hidden shrink-0">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,184,74,0.22),transparent_55%)]" />
+
               <button
                 onClick={closeRegistration}
-                className="absolute top-4 right-4 text-white/80 hover:text-white"
+                className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-10"
+                aria-label="Cerrar"
               >
                 <X className="w-6 h-6" />
               </button>
 
-              <h2
-                className="text-3xl uppercase tracking-wide"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-              >
-                Registrarse
-              </h2>
-
-              <p className="text-white/80">{selectedEvent.title}</p>
+              <div className="relative">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.26em] text-accent">
+                  Registro de evento
+                </p>
+                <h2
+                  className="text-3xl uppercase tracking-wide"
+                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                >
+                  Registrarse
+                </h2>
+                <p className="text-white/85 mt-1">{selectedEvent.title}</p>
+              </div>
             </div>
 
-            <form onSubmit={handleRegistrationSubmit} className="p-8 space-y-5">
+            <form
+              onSubmit={handleRegistrationSubmit}
+              className="p-8 space-y-5 overflow-y-auto"
+            >
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-gray-700 mb-2 font-semibold">
@@ -433,7 +463,7 @@ export default function Eventos() {
                     value={registrationForm.nombre}
                     onChange={handleRegistrationChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-accent/25 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
                   />
                 </div>
 
@@ -447,7 +477,7 @@ export default function Eventos() {
                     value={registrationForm.apellido}
                     onChange={handleRegistrationChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-accent/25 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
                   />
                 </div>
               </div>
@@ -463,7 +493,7 @@ export default function Eventos() {
                     value={registrationForm.email}
                     onChange={handleRegistrationChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-accent/25 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
                   />
                 </div>
 
@@ -477,7 +507,7 @@ export default function Eventos() {
                     value={registrationForm.telefono}
                     onChange={handleRegistrationChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-accent/25 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
                   />
                 </div>
               </div>
@@ -493,7 +523,7 @@ export default function Eventos() {
                   value={registrationForm.cantidad_personas}
                   onChange={handleRegistrationChange}
                   required
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full rounded-lg border border-accent/25 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
               </div>
 
@@ -507,20 +537,22 @@ export default function Eventos() {
                   onChange={handleRegistrationChange}
                   rows={3}
                   placeholder="Ej. Maria, Jose, Daniel"
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+                  className="w-full rounded-lg border border-accent/25 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30 resize-none"
                 />
               </div>
 
               {selectedEvent.need_volunteers && (
-                <label className="flex items-center gap-3 text-gray-700 font-semibold">
+                <label className="flex items-start gap-3 text-gray-700 rounded-lg border border-accent/25 bg-accent/5 px-4 py-4 cursor-pointer hover:bg-accent/10 transition-colors">
                   <input
                     type="checkbox"
                     name="quiere_voluntariar"
                     checked={registrationForm.quiere_voluntariar}
                     onChange={handleRegistrationChange}
-                    className="w-5 h-5"
+                    className="w-5 h-5 mt-0.5 accent-accent"
                   />
-                  Me gustaría ayudar como voluntario si se necesita
+                  <span className="font-semibold">
+                    Me gustaría ayudar como voluntario si se necesita
+                  </span>
                 </label>
               )}
 
@@ -533,14 +565,14 @@ export default function Eventos() {
                   value={registrationForm.mensaje}
                   onChange={handleRegistrationChange}
                   rows={4}
-                  className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+                  className="w-full rounded-lg border border-accent/25 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={registering}
-                className="w-full bg-accent text-primary px-6 py-4 uppercase tracking-wide hover:bg-accent/90 transition-colors disabled:opacity-50"
+                className="w-full rounded-lg bg-accent px-6 py-4 text-primary uppercase tracking-wide hover:bg-accent/90 transition-colors disabled:opacity-50 shadow-lg shadow-accent/25"
                 style={{ fontFamily: "'Bebas Neue', sans-serif" }}
               >
                 {registering ? "Enviando..." : "Enviar Registro"}
@@ -554,6 +586,8 @@ export default function Eventos() {
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
       />
+
+      <Toast {...toast} onClose={closeToast} />
     </div>
   );
 }

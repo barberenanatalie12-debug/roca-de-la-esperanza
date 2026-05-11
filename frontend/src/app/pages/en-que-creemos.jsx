@@ -1,130 +1,288 @@
-import { Book } from "lucide-react";
+import {
+  BookOpen,
+  Cross,
+  Crown,
+  Flame,
+  HeartHandshake,
+  ScrollText,
+  ShieldCheck,
+  Sparkles,
+  Stethoscope,
+} from "lucide-react";
 
 export default function EnQueCreemos() {
   const doctrines = [
     {
-      title: "Punto Doctrinal 1",
-      content: "Contenido pendiente.",
+      title: "La Personalidad de Dios",
+      verse: "Jn. 3:16",
+      text: "Creemos que Dios es un Ser personal, con inteligencia, sentimiento y voluntad. Él piensa, ama, gobierna, corrige y se revela al hombre como Creador, Señor y Padre eterno.",
+      icon: Sparkles,
     },
     {
-      title: "Punto Doctrinal 2",
-      content: "Contenido pendiente.",
+      title: "La Biblia",
+      verse: "2 Ti. 3:16",
+      text: "Creemos que la Biblia es la Palabra de Dios, inspirada divinamente, y por lo tanto la única regla de nuestra fe y conducta.",
+      icon: BookOpen,
     },
     {
-      title: "Punto Doctrinal 3",
-      content: "Contenido pendiente.",
+      title: "Cristo el Salvador",
+      verse: "Jn. 3:16",
+      text: "Creemos que Jesucristo es el Hijo de Dios, enviado por el Padre para salvar al hombre. Por su muerte y resurrección recibimos perdón, justificación y vida nueva.",
+      icon: Cross,
     },
     {
-      title: "Punto Doctrinal 4",
-      content: "Contenido pendiente.",
+      title: "La Santificación",
+      verse: "1 Ts. 5:23",
+      text: "Creemos que la santificación es parte indispensable de la salvación. Es una obra de Dios en el creyente y una vida apartada para Él.",
+      icon: HeartHandshake,
     },
     {
-      title: "Punto Doctrinal 5",
-      content: "Contenido pendiente.",
+      title: "El Bautismo con el Espíritu Santo",
+      verse: "Hch. 1:8",
+      text: "Creemos en el bautismo con el Espíritu Santo y fuego, concedido por Jesucristo como una experiencia de poder para servir, testificar y vivir lleno del Espíritu.",
+      icon: Flame,
     },
     {
-      title: "Punto Doctrinal 6",
-      content: "Contenido pendiente.",
+      title: "Jesucristo el Sanador",
+      verse: "Mt. 8:17",
+      text: "Creemos que el Señor Jesucristo es el sanador de nuestros cuerpos mortales y que su poder alcanza nuestras necesidades conforme a su voluntad.",
+      icon: Stethoscope,
     },
     {
-      title: "Punto Doctrinal 7",
-      content: "Contenido pendiente.",
+      title: "La Segunda Venida de Cristo",
+      verse: "1 Ts. 4:16",
+      text: "Creemos en la segunda venida de nuestro Señor Jesucristo. Esta esperanza anima a la iglesia a vivir preparada, fiel y constante.",
+      icon: Crown,
     },
     {
-      title: "Punto Doctrinal 8",
-      content: "Contenido pendiente.",
+      title: "La Resurrección y la Vida Eterna",
+      verse: "Jn. 11:25",
+      text: "Creemos en la resurrección y la inmortalidad del creyente. En Cristo tenemos esperanza eterna porque Él venció la muerte.",
+      icon: ShieldCheck,
+    },
+  ];
+
+  const beliefSummary = [
+    {
+      title: "Nuestra fe tiene fundamento",
+      text: "No se basa solamente en tradición o costumbre, sino en la revelación de Dios por medio de su Palabra.",
+      icon: ScrollText,
+    },
+    {
+      title: "Nuestra fe tiene centro",
+      text: "Todo apunta a Jesucristo: su divinidad, su obra salvadora, su poder y su regreso prometido.",
+      icon: Cross,
+    },
+    {
+      title: "Nuestra fe transforma la vida",
+      text: "La salvación produce una vida nueva, marcada por santidad, obediencia, amor y dependencia del Espíritu Santo.",
+      icon: Flame,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <section className="bg-primary py-16 md:py-24">
-        <div className="max-w-4xl mx-auto text-center px-4 md:px-6">
+    <main className="min-h-screen bg-background text-primary">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-primary text-white border-t-4 border-accent">
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/10 to-transparent" />
+
+        <div className="relative max-w-6xl mx-auto px-6 md:px-10 py-16">
+          <p className="text-sm uppercase tracking-[0.26em] text-accent font-semibold mb-4">
+            Doctrina y fe
+          </p>
+
           <h1
-            className="text-white text-4xl md:text-6xl mb-4 md:mb-6 uppercase tracking-wide"
+            className="text-5xl md:text-6xl mb-5 uppercase tracking-wide"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             En Qué Creemos
           </h1>
-          <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
-            Conoce los fundamentos doctrinales de nuestra fe.
+
+          <p className="text-lg md:text-xl max-w-3xl leading-relaxed text-white/90">
+            Como iglesia, afirmamos las doctrinas bíblicas enseñadas dentro de
+            ICIAR y reconocemos estas verdades como fundamento de nuestra fe,
+            enseñanza y práctica cristiana.
           </p>
+
+          <div className="mt-8 h-1 w-28 bg-accent" />
         </div>
       </section>
 
-      <section className="py-12 md:py-16 px-4 md:px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-6 md:p-8 border-l-4 border-accent">
+      {/* INTRO */}
+      <section className="max-w-6xl mx-auto px-6 md:px-10 py-16">
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-stretch">
+          <div className="rounded-lg bg-gradient-to-br from-primary to-primary/90 text-white p-8 md:p-10 border border-primary/80">
+            <p className="text-accent uppercase tracking-[0.26em] text-sm font-semibold mb-3">
+              Fundamento doctrinal
+            </p>
+
             <h2
-              className="text-primary text-2xl md:text-3xl mb-4 uppercase tracking-wide"
+              className="text-4xl md:text-5xl uppercase tracking-wide mb-5"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
-              Nuestra Base Doctrinal
+              La fe que confesamos
             </h2>
-            <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-              Basamos nuestra fe en ocho puntos doctrinales fundamentales centrados en la
-              autoridad de la Biblia, la Trinidad, la salvación por Cristo Jesús y la santificación
-              del creyente.
+
+            <p className="text-white/90 leading-relaxed text-lg">
+              Estas creencias resumen las verdades principales de nuestra fe.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md border border-accent/25 p-7 md:p-9 flex items-center">
+            <p className="text-gray-700 text-lg leading-relaxed">
+              Aquí explicamos lo que creemos doctrinalmente, mientras que la
+              página de Nosotros presenta quiénes somos como iglesia, nuestra
+              misión y el equipo que sirve en la congregación.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="py-12 md:py-16 px-4 md:px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {doctrines.map((doctrine, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group"
-              >
-                <div className="bg-gradient-to-r from-primary to-accent p-6">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
-                      <Book className="w-8 h-8 text-white" />
+      {/* DOCTRINES */}
+      <section className="bg-gradient-to-br from-accent/15 via-white to-primary/10 border-y border-accent/25">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 py-16">
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-[0.26em] text-accent font-semibold mb-4">
+              Lo que creemos
+            </p>
+
+            <h2
+              className="text-4xl md:text-5xl text-primary uppercase tracking-wide"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              Doctrinas Bíblicas
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {doctrines.map((item, index) => {
+              const Icon = item.icon;
+
+              return (
+                <article
+                  key={item.title}
+                  className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <div
+                    className={`h-2 ${
+                      index % 2 === 0 ? "bg-accent" : "bg-primary"
+                    }`}
+                  />
+
+                  <div className="p-6">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                        <Icon className="h-5 w-5" />
+                      </div>
+
+                      <span className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-xs font-semibold text-primary">
+                        {item.verse}
+                      </span>
                     </div>
+
                     <h3
-                      className="text-white text-xl md:text-2xl uppercase tracking-wide"
+                      className="text-primary text-2xl mb-3 uppercase tracking-wide"
                       style={{ fontFamily: "'Bebas Neue', sans-serif" }}
                     >
-                      {doctrine.title}
+                      {item.title}
                     </h3>
+
+                    <p className="text-gray-700 leading-relaxed">{item.text}</p>
                   </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-700 leading-relaxed italic">
-                    {doctrine.content}
-                  </p>
-                </div>
-              </div>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section className="py-12 md:py-16 px-4 md:px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-accent/10 rounded-lg p-8 md:p-12 border border-accent/20">
-            <h2
-              className="text-primary text-2xl md:text-3xl mb-4 uppercase tracking-wide"
-              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-            >
-              Nuestra Invitación
-            </h2>
-            <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6">
-              Si tienes preguntas o deseas aprender más sobre lo que creemos, te invitamos a
-              visitarnos o contactarnos directamente.
+      {/* BELIEF SUMMARY */}
+      <section className="max-w-6xl mx-auto px-6 md:px-10 py-16">
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <div>
+            <p className="text-sm uppercase tracking-[0.26em] text-accent font-semibold mb-4">
+              De la doctrina a la vida
             </p>
-            <a
-              href="/contacto"
-              className="inline-block bg-accent text-white px-8 py-3 rounded-lg hover:bg-accent/90 transition-colors uppercase tracking-wide"
+
+            <h2
+              className="text-4xl md:text-5xl text-primary uppercase tracking-wide mb-5"
               style={{ fontFamily: "'Bebas Neue', sans-serif" }}
             >
-              Contáctanos
-            </a>
+              Estas creencias guían nuestra vida
+            </h2>
+
+            <p className="text-gray-700 text-lg leading-relaxed">
+              La doctrina no reemplaza la vida cristiana, la dirige. Lo que
+              creemos acerca de Dios, la Biblia, Cristo, la salvación y el
+              Espíritu Santo da forma a nuestra adoración, enseñanza,
+              obediencia y esperanza.
+            </p>
+          </div>
+
+          <div className="grid gap-5">
+            {beliefSummary.map((item, index) => {
+              const Icon = item.icon;
+
+              return (
+                <article
+                  key={item.title}
+                  className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <div
+                    className={`h-2 ${
+                      index % 2 === 0 ? "bg-accent" : "bg-primary"
+                    }`}
+                  />
+
+                  <div className="p-6 flex gap-5">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                      <Icon className="h-5 w-5" />
+                    </div>
+
+                    <div>
+                      <h3
+                        className="text-primary text-2xl mb-2 uppercase tracking-wide"
+                        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                      >
+                        {item.title}
+                      </h3>
+
+                      <p className="text-gray-700 leading-relaxed">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
-    </div>
+
+      {/* CTA */}
+      <section className="bg-primary border-t-4 border-accent">
+        <div className="max-w-4xl mx-auto px-6 md:px-10 py-16 text-center">
+          <h2
+            className="text-accent text-4xl md:text-5xl mb-5 uppercase tracking-wide"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            Una fe que nos une
+          </h2>
+
+          <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+            Estas creencias nos afirman como iglesia y nos ayudan a vivir con
+            fidelidad, esperanza y obediencia delante de Dios.
+          </p>
+
+          <a
+            href="/nosotros"
+            className="inline-block bg-accent text-primary px-8 py-3 rounded-lg uppercase tracking-wide hover:bg-accent/90 transition-colors shadow-md shadow-accent/20"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            Conoce Nuestra Iglesia
+          </a>
+        </div>
+      </section>
+    </main>
   );
 }

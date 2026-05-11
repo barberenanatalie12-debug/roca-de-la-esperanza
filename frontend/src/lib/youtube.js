@@ -13,6 +13,7 @@ export const getYoutubeVideoId = (url) => {
     /youtu\.be\/([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
     /[?&]v=([a-zA-Z0-9_-]{11})/,
   ];
@@ -37,3 +38,16 @@ export const getYoutubeThumbnail = (url) => {
 
   return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 };
+
+export const getYoutubeEmbedUrl = (url) => {
+  const videoId = getYoutubeVideoId(url);
+
+  if (!videoId) {
+    return null;
+  }
+
+  return `https://www.youtube.com/embed/${videoId}`;
+};
+
+export const YOUTUBE_CHANNEL_URL =
+  "https://www.youtube.com/@rocadelaesperanza_sac";

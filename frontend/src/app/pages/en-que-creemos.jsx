@@ -9,6 +9,7 @@ import {
   Sparkles,
   Stethoscope,
 } from "lucide-react";
+import Main from "../../images/Main.png";
 
 export default function EnQueCreemos() {
   const doctrines = [
@@ -126,6 +127,27 @@ export default function EnQueCreemos() {
             <p className="text-white/90 leading-relaxed text-lg">
               Estas creencias resumen las verdades principales de nuestra fe.
             </p>
+
+            <div className="mt-7 flex items-center gap-4 rounded-lg bg-white/10 border border-white/15 px-4 py-3">
+             <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white shadow-md">
+              <img
+                src={Main}
+                alt="Logo de ICIAR"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-accent font-semibold mb-1">
+                  Afiliados a ICIAR
+                </p>
+
+                <p className="text-sm text-white/85 leading-relaxed">
+                  Compartimos la doctrina y enseñanza de la Iglesia Cristiana
+                  Interdenominacional A.R.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="bg-white rounded-lg shadow-md border border-accent/25 p-7 md:p-9 flex items-center">

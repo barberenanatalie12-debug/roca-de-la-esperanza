@@ -5,7 +5,9 @@ import { useState, useEffect } from "react";
 import { SociedadesNavigation } from "../../components/sociedades-navigation";
 import Slider from "react-slick";
 import "../../../styles/slick-carousel.css";
-
+import youth1 from "../../../images/youth1.png";
+import youth2 from "../../../images/youth2.png";
+import youth3 from "../../../images/youth3.png";
 export default function SociedadJovenes() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
@@ -13,21 +15,20 @@ export default function SociedadJovenes() {
     window.scrollTo(0, 0);
   }, []);
 
-  const jovenesImages = [
-    {
-      url: "https://images.unsplash.com/photo-1769755411779-e4c43e7b7742?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaHVyY2glMjB5b3V0aCUyMGdyb3VwJTIwdGVlbnN8ZW58MXx8fHwxNzc0MTQzMzM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      alt: "Jóvenes en comunidad",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1622598453695-4fbaf151aadc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaHVyY2glMjB5b3V0aCUyMGdyb3VwJTIwd29yc2hpcHxlbnwxfHx8fDE3NzQzMzI5NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      alt: "Jóvenes adorando juntos",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1722962674485-d34e69a9a406?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWVuYWdlcnMlMjBiaWJsZSUyMHN0dWR5JTIwY2h1cmNofGVufDF8fHx8MTc3NDMzMjk3N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      alt: "Estudio bíblico de jóvenes",
-    },
-  ];
-
+const jovenesImages = [
+  {
+    url: youth1,
+    alt: "Jóvenes en comunidad",
+  },
+  {
+    url: youth2,
+    alt: "Jóvenes adorando juntos",
+  },
+  {
+    url: youth3,
+    alt: "Estudio bíblico de jóvenes",
+  },
+];
   const sliderSettings = {
     dots: true,
     infinite: true,

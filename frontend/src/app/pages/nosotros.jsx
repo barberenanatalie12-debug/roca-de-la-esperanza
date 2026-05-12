@@ -44,12 +44,12 @@ export default function Nosotros() {
 
   const principalPastors = [
     {
-      name: "Hermano Jerónimo",
+      name: "Hno Gerónimo",
       role: "Pastor ",
       description: "Descripción pendiente.",
     },
     {
-      name: "Pastor Isui",
+      name: "Hno Isui",
       role: "Pastor",
       description: "Descripción pendiente.",
     },
@@ -62,7 +62,7 @@ export default function Nosotros() {
       description: "Descripción pendiente.",
     },
     {
-      name: "Nombre por confirmar",
+      name: "Hna Zulema",
       role: "Ministerio",
       description: "Descripción pendiente.",
     },
@@ -97,7 +97,7 @@ export default function Nosotros() {
       description: "Descripción pendiente.",
     },
     {
-      name: "Hno",
+      name: "Hno Uziel",
       role: "Sociedad de Jóvenes",
       description: "Descripción pendiente.",
     },

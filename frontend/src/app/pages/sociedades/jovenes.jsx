@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { SociedadesNavigation } from "../../components/sociedades-navigation";
 import Slider from "react-slick";
 import "../../../styles/slick-carousel.css";
-import youth1 from "../../../images/youth1.png";
+import youth1 from "../../../images/youth-1.png";
 import youth2 from "../../../images/youth2.png";
 import youth3 from "../../../images/youth3.png";
 export default function SociedadJovenes() {

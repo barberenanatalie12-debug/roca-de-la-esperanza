@@ -1,8 +1,15 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
 import { getYoutubeEmbedUrl } from "../../lib/youtube";
+import { facebookEmbedUrl } from "../../lib/siteContent";
 
-export function VideoModal({ open, videoUrl, title, onClose }) {
+export function VideoModal({
+  open,
+  videoUrl,
+  mediaType,
+  title,
+  onClose,
+}) {
   useEffect(() => {
     if (!open) return;
 
@@ -23,7 +30,52 @@ export function VideoModal({ open, videoUrl, title, onClose }) {
 
   if (!open) return null;
 
-  const embedUrl = getYoutubeEmbedUrl(videoUrl);
+  // Resolve which player to render
+  let player = null;
+
+  if (mediaType === "video" && videoUrl) {
+    player = (
+      <video
+        key={videoUrl}
+        src={videoUrl}
+        controls
+        autoPlay
+        playsInline
+        className="absolute top-0 left-0 w-full h-full bg-black"
+      />
+    );
+  } else if (mediaType === "facebook") {
+    const embed = facebookEmbedUrl(videoUrl);
+    if (embed) {
+      player = (
+        <iframe
+          key={embed}
+          src={embed}
+          title={title || "Video"}
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          allowFullScreen
+          scrolling="no"
+          frameBorder="0"
+          className="absolute top-0 left-0 w-full h-full border-0"
+        />
+      );
+    }
+  } else {
+    // Default: YouTube (also covers sermon usage)
+    const embed = getYoutubeEmbedUrl(videoUrl);
+    if (embed) {
+      player = (
+        <iframe
+          key={embed}
+          src={`${embed}?autoplay=1&rel=0`}
+          title={title || "Video"}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute top-0 left-0 w-full h-full border-0"
+        />
+      );
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -42,7 +94,7 @@ export function VideoModal({ open, videoUrl, title, onClose }) {
             className="relative text-lg md:text-xl uppercase tracking-wide truncate pr-4"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
-            {title || "Sermón"}
+            {title || "Video"}
           </h3>
 
           <button
@@ -55,18 +107,9 @@ export function VideoModal({ open, videoUrl, title, onClose }) {
         </div>
 
         <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-          {embedUrl ? (
-            <iframe
-              key={embedUrl}
-              src={`${embedUrl}?autoplay=1&rel=0`}
-              title={title || "Sermón"}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute top-0 left-0 w-full h-full border-0"
-            />
-          ) : (
+          {player || (
             <div className="absolute inset-0 flex items-center justify-center text-white/80 text-center px-6">
-              <p>No hay un video disponible para este sermón.</p>
+              <p>No hay un video disponible.</p>
             </div>
           )}
         </div>

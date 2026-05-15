@@ -10,6 +10,7 @@ import SermonsList from "./SermonsList";
 import InternalCalendar from "./InternalCalendar";
 import ConectateSubmissions from "./ConectateSubmissions";
 import RegistrationsList from "./RegistrationsList";
+import SiteContent from "./SiteContent";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -102,6 +103,7 @@ export default function Admin() {
       .from("registrate")
       .select("*")
       .eq("archived", false)
+      .eq("deleted", false)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -443,6 +445,18 @@ export default function Admin() {
             >
               Conexiones ({unreadCount})
             </button>
+
+            <button
+              onClick={() => setActiveTab("site")}
+              className={`py-4 px-2 border-b-2 transition-colors uppercase tracking-wide whitespace-nowrap ${
+                activeTab === "site"
+                  ? "border-accent text-accent"
+                  : "border-transparent text-gray-600 hover:text-accent"
+              }`}
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              Sitio
+            </button>
           </div>
         </div>
       </div>
@@ -536,6 +550,8 @@ export default function Admin() {
               onMarkRead={handleMarkSubmissionRead}
             />
           )}
+
+          {activeTab === "site" && <SiteContent />}
         </div>
       </div>
 

@@ -219,37 +219,52 @@ export default function Sermones() {
         </div>
       </div>
 
-      <div className="bg-primary py-16 px-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="max-w-6xl mx-auto px-6 md:px-10 pb-16">
+        <div className="rounded-lg bg-primary text-white border-t-4 border-accent p-8 md:p-10 text-center shadow-md">
           <h2
-            className="text-accent text-4xl mb-6 uppercase tracking-wide"
+            className="text-4xl md:text-5xl uppercase tracking-wide mb-4"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Únete a Nosotros
           </h2>
-          <p className="text-white/90 text-lg mb-8">
+          <p className="text-white/90 max-w-2xl mx-auto leading-relaxed mb-8">
             Experimenta estos mensajes poderosos en persona. Te esperamos en
             nuestros servicios.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <div className="bg-accent/20 p-6 rounded-lg">
-              <p className="text-white font-semibold text-lg">Domingos</p>
-              <p className="text-white/80">3:00 PM - 4:00 PM</p>
-              <p className="text-white/60 text-sm mt-1">Escuela Dominical</p>
+          <div className="grid sm:grid-cols-3 gap-5">
+            <div className="rounded-lg bg-white/10 border border-white/15 p-6">
+              <p
+                className="text-accent uppercase tracking-wide text-lg"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                Domingos
+              </p>
+              <p className="text-white text-2xl font-semibold mt-1">3:00 PM</p>
+              <p className="text-white/70 text-sm mt-1">Escuela Dominical</p>
             </div>
-            <div className="bg-accent/20 p-6 rounded-lg">
-              <p className="text-white font-semibold text-lg">Domingos</p>
-              <p className="text-white/80">4:30 PM - 6:00 PM</p>
-              <p className="text-white/60 text-sm mt-1">Culto General</p>
+            <div className="rounded-lg bg-white/10 border border-white/15 p-6">
+              <p
+                className="text-accent uppercase tracking-wide text-lg"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                Domingos
+              </p>
+              <p className="text-white text-2xl font-semibold mt-1">4:30 PM</p>
+              <p className="text-white/70 text-sm mt-1">Culto General</p>
             </div>
-            <div className="bg-accent/20 p-6 rounded-lg">
-              <p className="text-white font-semibold text-lg">Jueves</p>
-              <p className="text-white/80">7:30 PM - 9:00 PM</p>
-              <p className="text-white/60 text-sm mt-1">Servicio de Jueves</p>
+            <div className="rounded-lg bg-white/10 border border-white/15 p-6">
+              <p
+                className="text-accent uppercase tracking-wide text-lg"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                Jueves
+              </p>
+              <p className="text-white text-2xl font-semibold mt-1">7:30 PM</p>
+              <p className="text-white/70 text-sm mt-1">Servicio de Jueves</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <VideoModal
         open={Boolean(activeSermon)}

@@ -1,6 +1,6 @@
 import { MapPin, Phone, Youtube, Facebook } from "lucide-react";
 import { YOUTUBE_CHANNEL_URL } from "../../lib/youtube";
-import logo from "../../images/ICIAR-Logo.png";
+import logo from "../../images/Main.png";
 
 const FACEBOOK_URL = "https://www.facebook.com/Iciarusasacramento";
 
@@ -13,7 +13,7 @@ export function Footer() {
             <div className="flex flex-col items-center gap-3">
               <img
                 src={logo}
-                alt="Iglesia Roca de la Esperanza"
+                alt="ICIAR"
                 className="h-14 w-14 object-contain"
               />
 
@@ -21,9 +21,9 @@ export function Footer() {
                 className="text-accent text-2xl uppercase tracking-wide leading-tight"
                 style={{ fontFamily: "'Bebas Neue', sans-serif" }}
               >
-                Iglesia Roca
+                ICI-USA
                 <br />
-                de la Esperanza
+                ICIAR
               </p>
             </div>
           </div>

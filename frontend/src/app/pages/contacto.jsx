@@ -486,6 +486,21 @@ export default function Contacto() {
         </div>
       </section>
 
+      <section className="max-w-6xl mx-auto px-6 md:px-10 pb-16">
+        <div className="rounded-lg bg-primary text-white border-t-4 border-accent p-8 md:p-10 text-center shadow-md">
+          <h2
+            className="text-4xl md:text-5xl uppercase tracking-wide mb-4"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            Te esperamos
+          </h2>
+          <p className="text-white/90 max-w-2xl mx-auto leading-relaxed">
+            Ven a conocernos en persona. Te recibiremos con los brazos abiertos
+            y caminaremos contigo en fe.
+          </p>
+        </div>
+      </section>
+
       <Toast {...toast} onClose={closeToast} />
     </div>
   );

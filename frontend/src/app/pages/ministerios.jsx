@@ -100,19 +100,28 @@ export default function Ministerios() {
         </div>
       </div>
 
-      <div className="bg-primary py-16 px-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-accent text-4xl mb-6 uppercase tracking-wide" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+      <section className="max-w-6xl mx-auto px-6 md:px-10 pb-16">
+        <div className="rounded-lg bg-primary text-white border-t-4 border-accent p-8 md:p-10 text-center shadow-md">
+          <h2
+            className="text-4xl md:text-5xl uppercase tracking-wide mb-4"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
             ¿Quieres Servir?
           </h2>
-          <p className="text-white/90 text-lg mb-8">
-            Si estás interesado en unirte a alguno de nuestros ministerios o quieres más información, contáctanos. ¡Nos encantaría que formes parte de nuestro equipo!
+          <p className="text-white/90 max-w-2xl mx-auto leading-relaxed mb-6">
+            Si estás interesado en unirte a alguno de nuestros ministerios o
+            quieres más información, contáctanos. ¡Nos encantaría que formes
+            parte de nuestro equipo!
           </p>
-          <a href="/contacto" className="inline-block bg-accent text-primary px-8 py-4 uppercase tracking-wide hover:bg-accent/90 transition-colors" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+          <a
+            href="/contacto"
+            className="inline-block bg-accent text-primary px-8 py-3 rounded-lg uppercase tracking-wide hover:bg-accent/90 transition-colors shadow-md shadow-accent/20"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
             Contáctanos
           </a>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

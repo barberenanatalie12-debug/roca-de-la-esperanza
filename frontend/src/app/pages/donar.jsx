@@ -173,14 +173,20 @@ export default function Donar() {
         </div>
       </div>
 
-      <div className="bg-accent/10 py-20 px-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-700 text-xl leading-relaxed">
-            Cada ofrenda o donación, sin importar la cantidad, es una bendición para nuestra
-            iglesia y nuestra comunidad. Gracias por tu apoyo.
+      <section className="max-w-6xl mx-auto px-6 md:px-10 pb-16">
+        <div className="rounded-lg bg-primary text-white border-t-4 border-accent p-8 md:p-10 text-center shadow-md">
+          <h2
+            className="text-4xl md:text-5xl uppercase tracking-wide mb-4"
+            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+          >
+            Gracias por tu apoyo
+          </h2>
+          <p className="text-white/90 max-w-2xl mx-auto leading-relaxed">
+            Cada ofrenda o donación, sin importar la cantidad, es una bendición
+            para nuestra iglesia y nuestra comunidad.
           </p>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

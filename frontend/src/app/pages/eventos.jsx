@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin, Users, X } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, X, History } from "lucide-react";
 import { ContactModal } from "../components/contact-modal";
 import { Toast } from "../components/Toast";
 import { useState, useEffect } from "react";
@@ -35,6 +35,7 @@ function EventCardImage({ imageUrl, externalUrl, alt }) {
 export default function Eventos() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [items, setItems] = useState([]);
+  const [pastItems, setPastItems] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [registering, setRegistering] = useState(false);
@@ -121,13 +122,46 @@ export default function Eventos() {
       external_url: null,
     }));
 
-    const merged = [...normalizedEvents, ...normalizedServices].sort((a, b) => {
+    const merged = [...normalizedEvents, ...normalizedServices];
+
+    // Split into upcoming vs. already-passed.
+    // An item counts as "passed" once its date+time is in the past. Items
+    // without a date are treated as upcoming placeholders.
+    const now = new Date();
+    const upcoming = [];
+    const past = [];
+
+    for (const item of merged) {
+      if (!item.date) {
+        upcoming.push(item);
+        continue;
+      }
+      const when = new Date(`${item.date}T${item.time || "23:59"}:00`);
+      if (Number.isNaN(when.getTime()) || when >= now) {
+        upcoming.push(item);
+      } else {
+        past.push(item);
+      }
+    }
+
+    // Upcoming: soonest first.
+    upcoming.sort((a, b) => {
       if (!a.date) return 1;
       if (!b.date) return -1;
-      return a.date.localeCompare(b.date);
+      return `${a.date}T${a.time || "00:00"}`.localeCompare(
+        `${b.date}T${b.time || "00:00"}`
+      );
     });
 
-    setItems(merged);
+    // Past: most recently passed first, keep top 3, anything older disappears.
+    past.sort((a, b) =>
+      `${b.date}T${b.time || "00:00"}`.localeCompare(
+        `${a.date}T${a.time || "00:00"}`
+      )
+    );
+
+    setItems(upcoming);
+    setPastItems(past.slice(0, 3));
   }
 
   function canRegister(item) {
@@ -273,7 +307,7 @@ export default function Eventos() {
           <div className="space-y-12">
             {items.length === 0 ? (
               <div className="bg-white p-8 rounded-lg shadow-md text-center text-gray-500">
-                No hay eventos disponibles todavía.
+                No hay próximos eventos por ahora.
               </div>
             ) : (
               items.map((item, index) => (
@@ -350,68 +384,155 @@ export default function Eventos() {
         </div>
       </div>
 
-      <div id="actividades-regulares" className="py-20 px-10 bg-accent">
-        <div className="max-w-6xl mx-auto">
-          <h2
-            className="text-white text-5xl mb-12 uppercase tracking-wide text-center"
-            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-          >
-            Actividades Regulares
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-            {regularEvents.map((event, index) => (
-              <div
-                key={index}
-                className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20"
+      {pastItems.length > 0 && (
+        <section
+          id="eventos-pasados"
+          className="bg-stone-50 border-y border-accent/20"
+        >
+          <div className="max-w-6xl mx-auto px-6 md:px-10 py-16">
+            <div className="text-center mb-12">
+              <p className="text-sm uppercase tracking-[0.26em] text-accent font-semibold mb-4">
+                Ya celebrados
+              </p>
+              <h2
+                className="text-4xl md:text-5xl text-primary uppercase tracking-wide"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <Calendar className="w-5 h-5 text-white" />
-                  <h3
-                    className="text-white text-2xl uppercase tracking-wide"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                  >
-                    {event.title}
-                  </h3>
-                </div>
+                Eventos Pasados
+              </h2>
+            </div>
 
-                <div className="flex items-center gap-2 text-white/90 mb-3">
-                  <Clock className="w-4 h-4" />
-                  <p className="text-base md:text-lg">{event.when}</p>
-                </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {pastItems.map((item) => (
+                <article
+                  key={item.id}
+                  className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden flex flex-col"
+                >
+                  <div className="h-40 bg-primary/5 overflow-hidden flex items-center justify-center">
+                    {item.image_url ? (
+                      <img
+                        src={item.image_url}
+                        alt={item.title}
+                        className="w-full h-full object-cover opacity-90"
+                      />
+                    ) : (
+                      <History className="w-12 h-12 text-accent/70" />
+                    )}
+                  </div>
 
-                <p className="text-white/80 text-sm leading-relaxed">
-                  {event.description}
-                </p>
-              </div>
+                  <div className="p-5 flex-1">
+                    <h3
+                      className="text-primary text-2xl uppercase tracking-wide"
+                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                    >
+                      {item.title}
+                    </h3>
+
+                    <div className="mt-2 flex items-center gap-2 text-sm text-gray-600">
+                      <Calendar className="w-4 h-4 text-accent" />
+                      <span>{item.date}</span>
+                    </div>
+
+                    {item.location && (
+                      <div className="mt-1 flex items-center gap-2 text-sm text-gray-600">
+                        <MapPin className="w-4 h-4 text-accent" />
+                        <span>{item.location}</span>
+                      </div>
+                    )}
+
+                    {item.description && (
+                      <p className="text-gray-600 text-sm mt-3 line-clamp-3 leading-relaxed">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section
+        id="actividades-regulares"
+        className="bg-gradient-to-br from-accent/15 via-white to-primary/10 border-y border-accent/25"
+      >
+        <div className="max-w-6xl mx-auto px-6 md:px-10 py-16">
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-[0.26em] text-accent font-semibold mb-4">
+              Cada semana
+            </p>
+            <h2
+              className="text-4xl md:text-5xl text-primary uppercase tracking-wide"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              Actividades Regulares
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {regularEvents.map((event, index) => (
+              <article
+                key={index}
+                className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden hover:shadow-lg transition-shadow"
+              >
+                <div
+                  className={`h-2 ${
+                    index % 2 === 0 ? "bg-accent" : "bg-primary"
+                  }`}
+                />
+
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                      <Calendar className="w-5 h-5" />
+                    </div>
+                    <h3
+                      className="text-primary text-2xl uppercase tracking-wide"
+                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                    >
+                      {event.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-accent font-semibold mb-3">
+                    <Clock className="w-4 h-4" />
+                    <p>{event.when}</p>
+                  </div>
+
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    {event.description}
+                  </p>
+                </div>
+              </article>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="bg-primary py-16 px-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="max-w-6xl mx-auto px-6 md:px-10 pb-16">
+        <div className="rounded-lg bg-primary text-white border-t-4 border-accent p-8 md:p-10 text-center shadow-md">
           <h2
-            className="text-accent text-4xl mb-6 uppercase tracking-wide"
+            className="text-4xl md:text-5xl uppercase tracking-wide mb-4"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             ¿Preguntas sobre algún evento?
           </h2>
 
-          <p className="text-white/90 text-lg mb-8">
+          <p className="text-white/90 max-w-2xl mx-auto leading-relaxed mb-6">
             Si necesitas más información sobre cualquiera de nuestros eventos o
             quieres ayudar a organizarlos, contáctanos.
           </p>
 
           <button
             onClick={() => setIsContactModalOpen(true)}
-            className="inline-block bg-accent text-primary px-8 py-4 uppercase tracking-wide hover:bg-accent/90 transition-colors"
+            className="inline-block bg-accent text-primary px-8 py-3 rounded-lg uppercase tracking-wide hover:bg-accent/90 transition-colors shadow-md shadow-accent/20"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Contáctanos
           </button>
         </div>
-      </div>
+      </section>
 
       {showRegisterModal && selectedEvent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

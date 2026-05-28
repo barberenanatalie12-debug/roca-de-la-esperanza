@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import {
   AlertCircle,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
   Facebook,
   ImagePlus,
   Pencil,
@@ -254,6 +256,122 @@ function DropZone({ accept, file, previewUrl, isVideo, onPick, onClear }) {
           {file.name} ({Math.round(file.size / 1024)} KB)
         </p>
       )}
+    </div>
+  );
+}
+
+function TeamCarousel({ members, onEdit, onDelete }) {
+  const scrollRef = useRef(null);
+  const [canLeft, setCanLeft] = useState(false);
+  const [canRight, setCanRight] = useState(false);
+
+  function updateArrows() {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanLeft(el.scrollLeft > 4);
+    setCanRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }
+
+  useEffect(() => {
+    updateArrows();
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateArrows);
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, [members]);
+
+  function scrollByCards(direction) {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * 300, behavior: "smooth" });
+  }
+
+  return (
+    <div className="relative">
+      {canLeft && (
+        <button
+          type="button"
+          onClick={() => scrollByCards(-1)}
+          aria-label="Anterior"
+          className="absolute left-1 top-20 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md border border-accent/25 text-primary hover:bg-accent hover:text-white transition-colors"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+      )}
+      {canRight && (
+        <button
+          type="button"
+          onClick={() => scrollByCards(1)}
+          aria-label="Siguiente"
+          className="absolute right-1 top-20 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md border border-accent/25 text-primary hover:bg-accent hover:text-white transition-colors"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      )}
+
+      <div
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {members.map((member) => (
+          <article
+            key={member.id}
+            className="w-64 shrink-0 rounded-lg border border-accent/25 bg-white overflow-hidden"
+          >
+            <div className="h-40 bg-primary/5 flex items-center justify-center overflow-hidden">
+              {member.image_url ? (
+                <img
+                  src={member.image_url}
+                  alt={member.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <UsersIcon className="w-10 h-10 text-accent" />
+              )}
+            </div>
+            <div className="p-4">
+              <p
+                className="text-primary uppercase tracking-wide text-lg leading-tight"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                {member.name}
+              </p>
+              {member.role && (
+                <p className="text-accent text-[11px] uppercase tracking-wide mt-0.5">
+                  {member.role}
+                </p>
+              )}
+              {member.description && (
+                <p className="text-gray-600 text-xs mt-1 line-clamp-2">
+                  {member.description}
+                </p>
+              )}
+              <div className="mt-3 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => onEdit(member)}
+                  className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-accent/10 text-primary hover:bg-accent/20"
+                >
+                  <Pencil className="w-3 h-3" />
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onDelete(member.id)}
+                  className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded text-red-600 hover:bg-red-50"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
@@ -1133,68 +1251,13 @@ export default function SiteContent() {
                         >
                           {group.label}
                         </p>
-                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                          {group.members.map((member) => (
-                            <article
-                              key={member.id}
-                              className="flex gap-3 rounded-lg border border-accent/25 bg-white p-3"
-                            >
-                              <div className="w-20 h-20 rounded-lg overflow-hidden bg-primary/5 shrink-0 flex items-center justify-center">
-                                {member.image_url ? (
-                                  <img
-                                    src={member.image_url}
-                                    alt={member.name}
-                                    className="w-full h-full object-cover"
-                                  />
-                                ) : (
-                                  <UsersIcon className="w-7 h-7 text-accent" />
-                                )}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p
-                                  className="text-primary uppercase tracking-wide text-lg leading-tight"
-                                  style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                                >
-                                  {member.name}
-                                </p>
-                                {member.role && (
-                                  <p className="text-accent text-[11px] uppercase tracking-wide mt-0.5">
-                                    {member.role}
-                                  </p>
-                                )}
-                                {member.description && (
-                                  <p className="text-gray-600 text-xs mt-1 line-clamp-2">
-                                    {member.description}
-                                  </p>
-                                )}
-                                <div className="mt-2 flex gap-2">
-                                  <button
-                                    type="button"
-                                    onClick={() => openEditTeam(member)}
-                                    className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-accent/10 text-primary hover:bg-accent/20"
-                                  >
-                                    <Pencil className="w-3 h-3" />
-                                    Editar
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      softDelete(
-                                        "team_members",
-                                        member.id,
-                                        loadTeam
-                                      )
-                                    }
-                                    className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded text-red-600 hover:bg-red-50"
-                                  >
-                                    <Trash2 className="w-3 h-3" />
-                                    Eliminar
-                                  </button>
-                                </div>
-                              </div>
-                            </article>
-                          ))}
-                        </div>
+                        <TeamCarousel
+                          members={group.members}
+                          onEdit={openEditTeam}
+                          onDelete={(id) =>
+                            softDelete("team_members", id, loadTeam)
+                          }
+                        />
                       </div>
                     );
                   })}

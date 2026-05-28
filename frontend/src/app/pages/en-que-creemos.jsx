@@ -274,16 +274,16 @@ export default function EnQueCreemos() {
       </section>
 
       {/* CTA */}
-      <section className="bg-primary border-t-4 border-accent">
-        <div className="max-w-4xl mx-auto px-6 md:px-10 py-16 text-center">
+      <section className="max-w-6xl mx-auto px-6 md:px-10 pb-16">
+        <div className="rounded-lg bg-primary text-white border-t-4 border-accent p-8 md:p-10 text-center shadow-md">
           <h2
-            className="text-accent text-4xl md:text-5xl mb-5 uppercase tracking-wide"
+            className="text-4xl md:text-5xl uppercase tracking-wide mb-4"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             Una fe que nos une
           </h2>
 
-          <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-white/90 max-w-2xl mx-auto leading-relaxed mb-6">
             Estas creencias nos afirman como iglesia y nos ayudan a vivir con
             fidelidad, esperanza y obediencia delante de Dios.
           </p>

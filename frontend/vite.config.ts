@@ -19,4 +19,10 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  // CommonJS packages must be bundled in the prerender (SSR) build so their
+  // default imports resolve to the component, not the module object.
+  ssr: {
+    noExternal: ['react-slick', 'react-responsive-masonry'],
+  },
 })

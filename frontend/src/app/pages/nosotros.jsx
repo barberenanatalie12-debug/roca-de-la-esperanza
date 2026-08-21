@@ -122,11 +122,17 @@ function MediaSlide({ media, onPlay, fallbackAlt }) {
   }
 
   return (
-    <div className="relative h-96">
+    <div className="relative h-96 overflow-hidden bg-primary/10">
+      <img
+        src={media.image_url}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover blur-lg scale-110 opacity-60"
+      />
       <img
         src={media.image_url}
         alt={media.alt_text || fallbackAlt}
-        className="w-full h-96 object-cover"
+        className="relative h-96 w-full object-contain"
       />
     </div>
   );
@@ -146,14 +152,22 @@ function LeaderCard({ leader, theme = "primary" }) {
     <article className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden hover:shadow-lg transition-shadow">
       <div className={`h-2 ${bar}`} />
       <div
-        className={`${photoFrame} h-56 flex items-center justify-center relative overflow-hidden`}
+        className={`${photoFrame} aspect-square flex items-center justify-center relative overflow-hidden`}
       >
         {leader.image_url ? (
-          <img
-            src={leader.image_url}
-            alt={leader.name}
-            className="w-full h-full object-cover"
-          />
+          <>
+            <img
+              src={leader.image_url}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover blur-lg scale-110 opacity-60"
+            />
+            <img
+              src={leader.image_url}
+              alt={leader.name}
+              className="relative w-full h-full object-contain"
+            />
+          </>
         ) : (
           <div className="bg-white/15 w-28 h-28 rounded-full flex items-center justify-center border border-white/25">
             <Users className="w-14 h-14 text-white" />
@@ -198,13 +212,21 @@ function SocietyLeaderCard({ leader, index }) {
   return (
     <article className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden hover:shadow-lg transition-shadow">
       <div className={`h-2 ${bar}`} />
-      <div className="bg-gradient-to-br from-primary/90 to-primary/70 h-44 flex items-center justify-center relative overflow-hidden">
+      <div className="bg-gradient-to-br from-primary/90 to-primary/70 aspect-square flex items-center justify-center relative overflow-hidden">
         {leader.image_url ? (
-          <img
-            src={leader.image_url}
-            alt={leader.name}
-            className="w-full h-full object-cover"
-          />
+          <>
+            <img
+              src={leader.image_url}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover blur-lg scale-110 opacity-60"
+            />
+            <img
+              src={leader.image_url}
+              alt={leader.name}
+              className="relative w-full h-full object-contain"
+            />
+          </>
         ) : (
           <div className="bg-white/20 w-20 h-20 rounded-full flex items-center justify-center border border-white/30">
             <Users className="w-10 h-10 text-white" />

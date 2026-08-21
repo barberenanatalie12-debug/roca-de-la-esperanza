@@ -17,7 +17,7 @@ import SociedadNinos from "./pages/sociedades/ninos";
 import Login from "./pages/Login";
 import Admin from "./admin/Admin";
 
-export const router = createBrowserRouter([
+export const routes = [
   {
     path: "/",
     Component: Layout,
@@ -53,4 +53,9 @@ export const router = createBrowserRouter([
     path: "/Admin",
     element: <Navigate to="/admin" replace />,
   },
-]);
+];
+
+// Only create the browser router in the browser — the prerender build imports
+// `routes` from Node, where createBrowserRouter would crash on missing window.
+export const router =
+  typeof document !== "undefined" ? createBrowserRouter(routes) : null;

@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { Plus, Save, X, Trash2, ImagePlus, AlertCircle } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import { requireAdmin } from "../../lib/requireAdmin";
+import { ImageFrameEditor } from "../components/ImageFrameEditor";
+
+// Frame used for event images (matches the card on the public Eventos page).
+const EVENT_IMAGE_ASPECT = 4 / 3;
 
 const eventTypes = [
   "Evento Local",
@@ -90,6 +94,7 @@ export default function CreateEvent({ editing, onSaved, onCancel }) {
   );
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const frameEditorRef = useRef(null);
 
   useEffect(() => {
     if (editing) {
@@ -314,8 +319,25 @@ export default function CreateEvent({ editing, onSaved, onCancel }) {
 
     let finalImageUrl = null;
 
-    if (imageFile) {
-      const uploadedUrl = await uploadImage(imageFile);
+    // Prefer the framed version (fit / fill / zoom / position) when the
+    // browser lets us read the pixels; otherwise fall back to the original.
+    let framedFile = null;
+    if (imagePreview && frameEditorRef.current?.isExportable()) {
+      const isPng = imageFile?.type === "image/png";
+      const blob = await frameEditorRef.current.toBlob({
+        type: isPng ? "image/png" : "image/jpeg",
+      });
+      if (blob) {
+        framedFile = new File(
+          [blob],
+          `event-${Date.now()}.${isPng ? "png" : "jpg"}`,
+          { type: blob.type }
+        );
+      }
+    }
+
+    if (framedFile || imageFile) {
+      const uploadedUrl = await uploadImage(framedFile || imageFile);
       if (!uploadedUrl) {
         setSubmitting(false);
         return;
@@ -643,10 +665,10 @@ export default function CreateEvent({ editing, onSaved, onCancel }) {
             >
               {imagePreview ? (
                 <div className="space-y-3">
-                  <img
+                  <ImageFrameEditor
+                    ref={frameEditorRef}
                     src={imagePreview}
-                    alt="Vista previa"
-                    className="max-h-64 mx-auto rounded shadow-sm"
+                    aspect={EVENT_IMAGE_ASPECT}
                     onError={() => {
                       setImagePreview(null);
                       setSubmitError(

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { LogOut } from "lucide-react";
+import { LogOut, Home } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import { requireAdmin } from "../../lib/requireAdmin";
 import CreateService from "./CreateService";
@@ -360,14 +360,27 @@ export default function Admin() {
             </p>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="bg-white border-2 border-accent text-accent px-6 py-3 uppercase tracking-wide hover:bg-accent hover:text-primary transition-colors flex items-center gap-2"
-            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-          >
-            <LogOut className="w-5 h-5" />
-            Cerrar Sesión
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => navigate("/")}
+              className="bg-transparent border-2 border-white/70 text-white px-6 py-3 uppercase tracking-wide hover:bg-white hover:text-primary transition-colors flex items-center gap-2"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              <Home className="w-5 h-5" />
+              Salir al sitio
+            </button>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="bg-white border-2 border-accent text-accent px-6 py-3 uppercase tracking-wide hover:bg-accent hover:text-primary transition-colors flex items-center gap-2"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              <LogOut className="w-5 h-5" />
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
       </div>
 

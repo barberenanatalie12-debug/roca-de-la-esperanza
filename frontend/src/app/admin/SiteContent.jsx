@@ -1,4 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { ImageFrameEditor } from "../components/ImageFrameEditor";
+
+// Frame ratios that match how each image is shown on the public site.
+const FRAME_ASPECTS = {
+  ministry: 3 / 2,
+  team: 1,
+  media: 3 / 2,
+};
 import { useNavigate } from "react-router";
 import {
   AlertCircle,
@@ -169,7 +177,16 @@ function EditModal({ title, onClose, children }) {
   );
 }
 
-function DropZone({ accept, file, previewUrl, isVideo, onPick, onClear }) {
+function DropZone({
+  accept,
+  file,
+  previewUrl,
+  isVideo,
+  onPick,
+  onClear,
+  aspect = 3 / 2,
+  editorRef,
+}) {
   const [over, setOver] = useState(false);
 
   function handleDragOver(e) {
@@ -209,10 +226,10 @@ function DropZone({ accept, file, previewUrl, isVideo, onPick, onClear }) {
                 className="w-full h-44 rounded-md object-cover bg-black"
               />
             ) : (
-              <img
+              <ImageFrameEditor
+                ref={editorRef}
                 src={previewUrl}
-                alt="Vista previa"
-                className="w-full h-44 rounded-md object-cover"
+                aspect={aspect}
               />
             )}
             <button
@@ -396,6 +413,7 @@ export default function SiteContent() {
   const [uploadFile, setUploadFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [saving, setSaving] = useState(false);
+  const frameEditorRef = useRef(null);
 
   useEffect(() => {
     loadAll();
@@ -555,11 +573,32 @@ export default function SiteContent() {
 
   async function uploadToBucket(bucket) {
     if (!uploadFile) return null;
-    const clean = uploadFile.name
+
+    let body = uploadFile;
+    let clean = uploadFile.name
       ? uploadFile.name.replace(/\s+/g, "_")
       : `media-${Date.now()}`;
+
+    // Images go through the frame editor (fit / fill / zoom / position) so
+    // what was previewed is exactly what gets stored.
+    if (
+      uploadFile.type?.startsWith("image/") &&
+      frameEditorRef.current?.isExportable()
+    ) {
+      const isPng = uploadFile.type === "image/png";
+      const blob = await frameEditorRef.current.toBlob({
+        type: isPng ? "image/png" : "image/jpeg",
+      });
+      if (blob) {
+        body = blob;
+        clean = clean.replace(/\.[^.]+$/, "") + (isPng ? ".png" : ".jpg");
+      }
+    }
+
     const path = `${Date.now()}-${clean}`;
-    const { error } = await supabase.storage.from(bucket).upload(path, uploadFile);
+    const { error } = await supabase.storage
+      .from(bucket)
+      .upload(path, body, { contentType: body.type || undefined });
     if (error) {
       setFeedback({
         type: "error",
@@ -1164,6 +1203,8 @@ export default function SiteContent() {
                     <label className={labelClass}>Imagen</label>
                     <DropZone
                       accept="image/*"
+                      aspect={FRAME_ASPECTS.ministry}
+                      editorRef={frameEditorRef}
                       file={uploadFile}
                       previewUrl={filePreview}
                       onPick={setUploadFile}
@@ -1361,6 +1402,8 @@ export default function SiteContent() {
                     <label className={labelClass}>Foto</label>
                     <DropZone
                       accept="image/*"
+                      aspect={FRAME_ASPECTS.team}
+                      editorRef={frameEditorRef}
                       file={uploadFile}
                       previewUrl={filePreview}
                       onPick={setUploadFile}
@@ -1767,6 +1810,8 @@ export default function SiteContent() {
                             : "image/*"
                         }
                         isVideo={mediaForm.media_type === "video"}
+                        aspect={FRAME_ASPECTS.media}
+                        editorRef={frameEditorRef}
                         file={uploadFile}
                         previewUrl={filePreview}
                         onPick={setUploadFile}

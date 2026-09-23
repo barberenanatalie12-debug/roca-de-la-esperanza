@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Mail, Lock, LogIn } from "lucide-react";
 import { supabase } from "../../lib/supabase";
@@ -9,6 +9,32 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  // Already signed in as an admin? Go straight to the panel.
+  useEffect(() => {
+    let cancelled = false;
+
+    const checkExistingSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      const userId = data?.session?.user?.id;
+      if (!userId || cancelled) return;
+
+      const { data: adminRow } = await supabase
+        .from("admins")
+        .select("user_id")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      if (adminRow && !cancelled) {
+        navigate("/admin", { replace: true });
+      }
+    };
+
+    checkExistingSession();
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate]);
 
 
   const handleSubmit = async (e) => {

@@ -102,6 +102,10 @@ export default function InternalCalendar({ events = [], services = [] }) {
     const title = entry.calendar_title?.trim();
     const type = entry.calendar_type?.trim();
     const location = entry.location?.trim();
+    // Only services carry a short "tema" note; event descriptions are long
+    // public blurbs and would overflow the cell.
+    const description =
+      entry.calendar_type === "Servicio" ? entry.description?.trim() : "";
     const worshipPerson = entry.worship_person?.trim();
     const sermonPerson = entry.sermon_person?.trim();
     const translationPerson = entry.translation_person?.trim();
@@ -125,6 +129,12 @@ export default function InternalCalendar({ events = [], services = [] }) {
 
         {title && (
           <div className="text-gray-800 calendar-entry-title">{title}</div>
+        )}
+
+        {description && (
+          <div className="text-gray-700 italic calendar-entry-title">
+            {description}
+          </div>
         )}
 
         {(worshipPerson || sermonPerson || translationPerson) && (

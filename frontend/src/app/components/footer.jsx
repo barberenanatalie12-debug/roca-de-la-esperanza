@@ -1,21 +1,35 @@
-import { MapPin, Phone, Youtube, Facebook } from "lucide-react";
+import { useState } from "react";
+import { MapPin, Phone, Youtube, Facebook, LogIn } from "lucide-react";
+import { Link } from "react-router";
 import { YOUTUBE_CHANNEL_URL } from "../../lib/youtube";
 import logo from "../../images/Main.png";
 
 const FACEBOOK_URL = "https://www.facebook.com/Iciarusasacramento";
 
 export function Footer() {
+  // Hidden "easter egg": the admin sign-in button only appears after the
+  // footer logo is clicked, so it stays out of sight for regular visitors.
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
     <footer className="bg-primary text-white border-t-4 border-accent">
       <div className="max-w-6xl mx-auto px-6 md:px-10 py-9">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-center gap-3">
-              <img
-                src={logo}
-                alt="ICIAR"
-                className="h-14 w-14 object-contain"
-              />
+              <button
+                type="button"
+                onClick={() => setShowLogin((value) => !value)}
+                aria-label="ICIAR"
+                className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <img
+                  src={logo}
+                  alt="ICIAR"
+                  className="h-14 w-14 object-contain select-none"
+                  draggable="false"
+                />
+              </button>
 
               <p
                 className="text-accent text-2xl uppercase tracking-wide leading-tight"
@@ -90,10 +104,21 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-5 border-t border-white/10 text-center">
+        <div className="mt-8 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 text-center">
           <p className="text-white/60 text-xs">
             © 2026 Iglesia Roca de la Esperanza. Todos los derechos reservados.
           </p>
+
+          {showLogin && (
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-2 rounded border border-accent/60 px-4 py-2 text-accent text-sm uppercase tracking-wide hover:bg-accent hover:text-primary transition-colors animate-in fade-in duration-300"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              <LogIn className="w-4 h-4" />
+              Iniciar sesión
+            </Link>
+          )}
         </div>
       </div>
     </footer>

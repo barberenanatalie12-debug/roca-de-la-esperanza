@@ -91,7 +91,7 @@ function MediaSlide({ media, onPlay, fallbackAlt }) {
       <button
         type="button"
         onClick={() => onPlay(media)}
-        className="group relative block h-96 w-full overflow-hidden bg-primary text-left"
+        className="group relative block aspect-video w-full overflow-hidden bg-primary text-left"
         aria-label="Reproducir video"
       >
         {thumb ? (
@@ -122,7 +122,7 @@ function MediaSlide({ media, onPlay, fallbackAlt }) {
   }
 
   return (
-    <div className="relative h-96 overflow-hidden bg-primary/10">
+    <div className="relative overflow-hidden bg-primary/10">
       <img
         src={media.image_url}
         alt=""
@@ -132,7 +132,7 @@ function MediaSlide({ media, onPlay, fallbackAlt }) {
       <img
         src={media.image_url}
         alt={media.alt_text || fallbackAlt}
-        className="relative h-96 w-full object-contain"
+        className="relative block mx-auto w-full h-auto max-h-[36rem] object-contain"
       />
     </div>
   );
@@ -152,7 +152,9 @@ function LeaderCard({ leader, theme = "primary" }) {
     <article className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden hover:shadow-lg transition-shadow">
       <div className={`h-2 ${bar}`} />
       <div
-        className={`${photoFrame} aspect-square flex items-center justify-center relative overflow-hidden`}
+        className={`${photoFrame} ${
+          leader.image_url ? "" : "aspect-square"
+        } flex items-center justify-center relative overflow-hidden`}
       >
         {leader.image_url ? (
           <>
@@ -165,7 +167,7 @@ function LeaderCard({ leader, theme = "primary" }) {
             <img
               src={leader.image_url}
               alt={leader.name}
-              className="relative w-full h-full object-contain"
+              className="relative block mx-auto w-full h-auto max-h-[28rem] object-contain"
             />
           </>
         ) : (
@@ -212,7 +214,11 @@ function SocietyLeaderCard({ leader, index }) {
   return (
     <article className="bg-white rounded-lg shadow-md border border-accent/25 overflow-hidden hover:shadow-lg transition-shadow">
       <div className={`h-2 ${bar}`} />
-      <div className="bg-gradient-to-br from-primary/90 to-primary/70 aspect-square flex items-center justify-center relative overflow-hidden">
+      <div
+        className={`bg-gradient-to-br from-primary/90 to-primary/70 ${
+          leader.image_url ? "" : "aspect-square"
+        } flex items-center justify-center relative overflow-hidden`}
+      >
         {leader.image_url ? (
           <>
             <img
@@ -224,7 +230,7 @@ function SocietyLeaderCard({ leader, index }) {
             <img
               src={leader.image_url}
               alt={leader.name}
-              className="relative w-full h-full object-contain"
+              className="relative block mx-auto w-full h-auto max-h-[24rem] object-contain"
             />
           </>
         ) : (

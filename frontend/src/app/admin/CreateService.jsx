@@ -65,6 +65,7 @@ const serviceRowToForm = (row) => ({
   worship_person: row.worship_person || "",
   sermon_person: row.sermon_person || "",
   translation_person: row.translation_person || "",
+  description: row.description || "",
   video_url: row.video_url || "",
   show_on_calendar: row.show_on_calendar !== false,
   show_on_events: row.show_on_events || false,
@@ -156,6 +157,7 @@ export default function CreateService({ editing, onSaved, onCancel }) {
       worship_person: "",
       sermon_person: "",
       translation_person: "",
+      description: "",
       video_url: "",
       show_on_calendar: true,
       show_on_events: false,
@@ -181,6 +183,7 @@ export default function CreateService({ editing, onSaved, onCancel }) {
       draft.worship_person.trim() ||
         draft.sermon_person.trim() ||
         draft.translation_person.trim() ||
+        draft.description.trim() ||
         draft.video_url.trim()
     );
   };
@@ -211,7 +214,8 @@ export default function CreateService({ editing, onSaved, onCancel }) {
       service_date: draft.service_date,
       service_time: draft.service_time,
       location: null,
-      description: null,
+      description:
+        draft.description.trim() === "" ? null : draft.description.trim(),
       worship_person:
         draft.worship_person.trim() === "" ? null : draft.worship_person.trim(),
       sermon_person:
@@ -286,6 +290,10 @@ export default function CreateService({ editing, onSaved, onCancel }) {
         editForm.translation_person.trim() === ""
           ? null
           : editForm.translation_person.trim(),
+      description:
+        editForm.description.trim() === ""
+          ? null
+          : editForm.description.trim(),
       video_url:
         editForm.video_url.trim() === "" ? null : editForm.video_url.trim(),
       show_on_calendar: true,
@@ -428,6 +436,21 @@ export default function CreateService({ editing, onSaved, onCancel }) {
 
             <div>
               <label className="block text-gray-700 mb-2 font-semibold">
+                Tema / Nota
+              </label>
+              <input
+                type="text"
+                value={editForm.description}
+                onChange={(e) =>
+                  handleEditFieldChange("description", e.target.value)
+                }
+                placeholder="Ej. La soteriología, Mesa del Señor, Bautismos..."
+                className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 mb-2 font-semibold">
                 Video del servicio
               </label>
               <input
@@ -518,6 +541,13 @@ export default function CreateService({ editing, onSaved, onCancel }) {
               <span className="font-semibold">Traductor:</span>{" "}
               {editForm.translation_person || "No asignado"}
             </p>
+
+            {editForm.description && (
+              <p className="text-gray-700">
+                <span className="font-semibold">Tema:</span>{" "}
+                {editForm.description}
+              </p>
+            )}
 
             {editForm.video_url && (
               <a
@@ -766,6 +796,25 @@ export default function CreateService({ editing, onSaved, onCancel }) {
                         e.target.value
                       )
                     }
+                    className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-2 font-semibold">
+                    Tema / Nota
+                  </label>
+                  <input
+                    type="text"
+                    value={draft.description}
+                    onChange={(e) =>
+                      handleServiceDraftChange(
+                        index,
+                        "description",
+                        e.target.value
+                      )
+                    }
+                    placeholder="Ej. La soteriología, Mesa del Señor, Bautismos..."
                     className="w-full px-4 py-3 bg-gray-100 border-0 rounded focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>

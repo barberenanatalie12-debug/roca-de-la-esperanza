@@ -4,14 +4,32 @@
     {
       "name": "preview-dist",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "preview", "--prefix", "frontend"],
+      "runtimeArgs": [
+        "run",
+        "preview",
+        "--prefix",
+        "frontend"
+      ],
       "port": 4173
     },
     {
       "name": "dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "frontend"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "frontend"
+      ],
       "port": 5173
+    },
+    {
+      "name": "csp-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "frontend/scripts/serve-with-headers.mjs"
+      ],
+      "port": 8788
     }
   ]
 }
